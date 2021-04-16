@@ -9,6 +9,7 @@ function App() {
         <Route path="/">
           <Navbar />
           <Post />
+          <Post />
         </Route>
       </Switch>
     </Router>

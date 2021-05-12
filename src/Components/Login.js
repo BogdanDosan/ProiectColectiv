@@ -12,39 +12,38 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
+  paperLogin: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
+  avatarLogin: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.primary.main,
   },
-  form: {
-    width: "100%", // Fix IE 11 issue.
+  formLogin: {
     marginTop: theme.spacing(1),
   },
-  submit: {
+  submitLogin: {
     margin: theme.spacing(3, 0, 2),
   },
 }));
 
-export default function SignIn() {
+export default function LogIn() {
   const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
+      <div className={classes.paperLogin}>
+        <Avatar className={classes.avatarLogin}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Log in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.formLogin} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -73,7 +72,7 @@ export default function SignIn() {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            className={classes.submitLogin}
           >
             Log In
           </Button>

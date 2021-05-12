@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import HomeIcon from "@material-ui/icons/Home";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,6 +19,15 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  toolbar: {
+    "& *": {
+      margin: "0 5px",
+    },
+  },
+  appbar: {
+    background:
+      "linear-gradient(to right, #24243e, #302b63, #0f0c29)" 
+  },
 }));
 
 export default function Navbar() {
@@ -25,8 +35,8 @@ export default function Navbar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="primary">
-        <Toolbar>
+      <AppBar position="sticky" className={classes.appbar}>
+        <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
             className={classes.menuButton}
@@ -42,11 +52,16 @@ export default function Navbar() {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            component={Link}
+            to="/profile"
           >
             <PermIdentityIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}></Typography>
-
+          <Button variant="contained" component={Link} to="/createPost">
+            <AddCircleOutlineIcon />
+            Create Post
+          </Button>
           <Button color="inherit" component={Link} to="/login">
             Login
           </Button>

@@ -3,17 +3,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ibm from "../Images/ibm.jpg";
+import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   post: {
     border: "1px solid black",
     borderRadius: "5px",
     padding: "15px",
-    margin: "10px 0",
-    width: "20vw",
+    marginTop: "20px",
     display: "block",
-    boxShadow:
-      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    flexGrow: 1,
     marginBottom: "80px",
   },
   bodyy: {
@@ -22,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     margin: "15px",
     justifyContent: "space-evenly",
     overflow: "hidden",
-    width: "100%",
   },
   jobInfoResumee: {
     display: "flex",
@@ -41,6 +39,13 @@ const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
     color: "black",
+    maxWidth: "20vw",
+    "@media (max-width: 400px)": {
+      maxWidth: "80vw",
+    },
+    "@media (max-width: 768px)": {
+      maxWidth: "40vw",
+    },
   },
   jobTitle: {
     fontWeight: "bold",
@@ -63,8 +68,8 @@ export default function Post() {
   return (
     <div className={classes.bodyy}>
       {infos.map((info) => (
-        <Link className={classes.link} to="/post/${info.id}">
-          <div className={classes.post} key={info.id}>
+        <Link className={classes.link} to="/detailedPost">
+          <Box className={classes.post} key={info.id} boxShadow={8}>
             <div className={classes.jobInfoResumee}>
               <div className={classes.companyPhoto}>
                 <img
@@ -83,7 +88,7 @@ export default function Post() {
               pariatur sit non nulla. Dolor ad laborum cupidatat veniam
               proident.
             </div>
-          </div>
+          </Box>
         </Link>
       ))}
     </div>

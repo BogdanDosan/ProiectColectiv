@@ -8,9 +8,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
+import { useForm, Controller } from "react-hook-form";
 import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
-
 const useStyles = makeStyles((theme) => ({
   paperRegister: {
     marginTop: theme.spacing(8),
@@ -36,12 +35,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+const SignUp = () => {
   const classes = useStyles();
   const [role, setRole] = useState("");
+  const { handleSubmit, control } = useForm();
   const handleRadioChange = (event) => {
     setRole(event.target.value);
   };
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -52,41 +56,111 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.formRegister} noValidate>
+        <form
+          className={classes.formRegister}
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
+              <Controller
                 name="email"
-                autoComplete="email"
+                control={control}
+                defaultValue=""
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    value={value}
+                    onChange={onChange}
+                    error={!!error}
+                    helperText={error ? error.message : null}
+                    label="Email Address"
+                  />
+                )}
+                rules={{
+                  required: { value: true, message: "*E-mail required" },
+                  pattern: {
+                    value:
+                      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                    message: "*Invalid e-mail",
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
+              <Controller
                 name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="password"
+                control={control}
+                defaultValue=""
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    variant="outlined"
+                    value={value}
+                    onChange={onChange}
+                    fullWidth
+                    error={!!error}
+                    helperText={error ? error.message : null}
+                    label="Password"
+                    type="password"
+                  />
+                )}
+                rules={{
+                  required: { value: true, message: "*Password required" },
+                  minLength: {
+                    value: 8,
+                    message: "*Password must be at least 8 characters long",
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
                 name="confirmPassword"
                 label="Confirm password"
                 type="password"
                 id="confirmPssword"
                 autoComplete="confirmPassword"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                name="phoneNumber"
+                control={control}
+                defaultValue=""
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
+                  <TextField
+                    variant="outlined"
+                    value={value}
+                    onChange={onChange}
+                    fullWidth
+                    error={!!error}
+                    helperText={error ? error.message : null}
+                    label="Phone number"
+                    type="text"
+                  />
+                )}
+                rules={{
+                  required: {
+                    value: true,
+                    message: "*Phone number required",
+                  },
+                  pattern: {
+                    value:
+                      /^(\+4|)?(07[0-8]{1}[0-9]{1}|02[0-9]{2}|03[0-9]{2}){1}?(\s|\.|\-)?([0-9]{3}(\s|\.|\-|)){2}$/,
+                    message: "Not a valid number",
+                  },
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -115,38 +189,85 @@ export default function SignUp() {
             {role === "Student" ? (
               <Grid item xs={12} className={classes.registerConditionalGrid}>
                 <Grid item xs={12}>
-                  <TextField
-                    autoComplete="fname"
-                    name="firstName"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="First Name"
+                  <Controller
+                    name="firstname"
+                    control={control}
+                    defaultValue=""
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <TextField
+                        variant="outlined"
+                        value={value}
+                        onChange={onChange}
+                        fullWidth
+                        error={!!error}
+                        helperText={error ? error.message : null}
+                        label="First name"
+                        type="text"
+                      />
+                    )}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: "*First name required",
+                      },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="lname"
+                  <Controller
+                    name="lastname"
+                    control={control}
+                    defaultValue=""
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <TextField
+                        variant="outlined"
+                        value={value}
+                        onChange={onChange}
+                        fullWidth
+                        error={!!error}
+                        helperText={error ? error.message : null}
+                        label="Last name"
+                        type="text"
+                      />
+                    )}
+                    rules={{
+                      required: { value: true, message: "*Last name required" },
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    label="Birth date"
-                    id="date"
-                    type="date"
-                    defaultValue="10-01-2001"
-                    InputLabelProp={{
-                      shrink: true,
+                  <Controller
+                    name="birthdate"
+                    control={control}
+                    defaultValue=""
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <TextField
+                        variant="outlined"
+                        value={value}
+                        onChange={onChange}
+                        fullWidth
+                        error={!!error}
+                        helperText={error ? error.message : null}
+                        type="date"
+                        InputLabelProp={{
+                          shrink: true,
+                        }}
+                      />
+                    )}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: "*Birth date required",
+                      },
                     }}
                   />
                 </Grid>
@@ -154,19 +275,54 @@ export default function SignUp() {
             ) : role === "Company" ? (
               <Grid item xs={12} className={classes.registerConditionalGrid}>
                 <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    label="Company name"
-                    id="compName"
+                  <Controller
+                    name="companyname"
+                    control={control}
+                    defaultValue=""
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <TextField
+                        variant="outlined"
+                        value={value}
+                        onChange={onChange}
+                        fullWidth
+                        error={!!error}
+                        helperText={error ? error.message : null}
+                        label="Company name"
+                        type="text"
+                      />
+                    )}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: "*Company name required",
+                      },
+                    }}
                   />
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    label="Location"
-                    id="location"
+                  <Controller
+                    name="location"
+                    control={control}
+                    defaultValue=""
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error },
+                    }) => (
+                      <TextField
+                        variant="outlined"
+                        value={value}
+                        onChange={onChange}
+                        fullWidth
+                        error={!!error}
+                        helperText={error ? error.message : null}
+                        label="Location"
+                        type="text"
+                      />
+                    )}
+                    rules={{
+                      required: { value: true, message: "*Location required" },
+                    }}
                   />
                 </Grid>
               </Grid>
@@ -187,4 +343,5 @@ export default function SignUp() {
       </div>
     </Container>
   );
-}
+};
+export default SignUp;

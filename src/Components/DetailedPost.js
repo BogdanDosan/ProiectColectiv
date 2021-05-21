@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "30px",
     display: "flex",
     flexWrap: "wrap",
-    borderRadius: "5px",
+    borderRadius: "20px",
   },
   detailedPostAuthorNameDate: {
     display: "flex",
@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "50%",
     "& p": {
       padding: "0 20px",
+      fontSize: "2vi",
     },
     "& li": {
       padding: "0 20px",
@@ -57,11 +58,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     height: "40px",
     alignItems: "left",
+    justifyContent:"space-around",
     padding: "10px 0",
+    margin:"0 10px",
     "& img": {
+      display:"block",
+      height:"40px",
       borderRadius: "50%",
-      height: "100%",
-      margin: "auto 10px",
     },
   },
   detailedPostCommentsComments: {

@@ -1,9 +1,10 @@
-import { Box, Button, Divider } from "@material-ui/core";
+import { Box, Button, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import PublishIcon from "@material-ui/icons/Publish";
+import { Controller, useForm } from "react-hook-form";
 const useStyles = makeStyles((theme) => ({
   createPostBody: {
     display: "flex",
@@ -39,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
     width: "35%",
     margin: "auto",
   },
+  createPostTextarea: {
+    resize: "none",
+    width: "100%",
+  },
 }));
 
 export default function CreatePost() {
@@ -50,6 +55,9 @@ export default function CreatePost() {
     const list = [...type];
     list[index] = value;
     setType(list);
+  };
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
   const handleAddInputResp = () => {
@@ -71,36 +79,117 @@ export default function CreatePost() {
     list.pop();
     setProgLang(list);
   };
+  const { handleSubmit, control } = useForm();
   return (
     <form>
       <Box className={classes.createPostBody} boxShadow={8}>
         <div className={classes.createPostSection} style={{ flex: 3 }}>
           <div className={classes.createPostBar}>
             <p>Job title: </p>
-            <input style={{ width: "100%", height: "20px" }} type="text"></input>
+            <Controller
+              name="jobTitle"
+              control={control}
+              defaultValue=""
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <TextField
+                  variant="standard"
+                  fullWidth
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
+              )}
+              rules={{
+                required: { value: true, message: "*Job title required" },
+                maxLength: { value: 30, message: "*Maximum 30 characters" },
+              }}
+            />
           </div>
           <div className={classes.createPostBar}>
             <p>Summary: </p>
-            <textarea
-              maxlength="140"
-              style={{ width: "100%", height: "40px" }}
+            <Controller
+              name="summary"
+              control={control}
+              defaultValue=""
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <TextField
+                  variant="standard"
+                  multiline
+                  rows={2}
+                  fullWidth
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
+              )}
+              rules={{
+                required: { value: true, message: "*Summary required" },
+                maxLength: { value: 140, message: "*Maximum 140 characters" },
+              }}
             />
           </div>
           <div className={classes.createPostBar}>
             <p>Description: </p>
-            <textarea
-              maxlength="300"
-              style={{ width: "100%", height: "80px" }}
+            <Controller
+              name="description"
+              control={control}
+              defaultValue=""
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <TextField
+                  variant="standard"
+                  multiline
+                  rows={4}
+                  fullWidth
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
+              )}
+              rules={{
+                required: { value: true, message: "*Description required" },
+                maxLength: { value: 300, message: "*Maximum 300 characters" },
+              }}
             />
           </div>
           <div className={classes.createPostBar}>
-            <p>Job requirements: </p>
-            <textarea
-              maxlength="200"
-              style={{ width: "100%", height: "60px" }}
+            <p>Job requirements</p>
+          <Controller
+              name="jobReq"
+              control={control}
+              defaultValue=""
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <TextField
+                  variant="standard"
+                  multiline
+                  rows={3}
+                  fullWidth
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
+              )}
+              rules={{
+                required: { value: true, message: "*Job requirements required" },
+                maxLength: { value: 200, message: "*Maximum 200 characters" },
+              }}
             />
           </div>
-          
         </div>
         <div
           className={classes.createPostSection}
@@ -171,12 +260,12 @@ export default function CreatePost() {
             variant="contained"
             color="primary"
             className={classes.createPostButton}
+            onClick={handleSubmit(onSubmit)}
           >
             <PublishIcon />
             Submit
           </Button>
         </div>
-        
       </Box>
     </form>
   );

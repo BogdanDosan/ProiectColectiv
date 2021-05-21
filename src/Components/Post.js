@@ -7,8 +7,7 @@ import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   post: {
-    border: "1px solid black",
-    borderRadius: "5px",
+    borderRadius: "10px",
     padding: "15px",
     marginTop: "20px",
     display: "block",
@@ -28,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
   },
   jobDescription: {
     padding: "5px 0",
+    fontFamily:"Verdana, sans-serif",
+    fontSize:"15px",
   },
   companyPhoto: {
     height: "50px",
@@ -49,10 +50,13 @@ const useStyles = makeStyles((theme) => ({
   },
   jobTitle: {
     fontWeight: "bold",
+    fontFamily: "Noto Sans, sans-serif",
+    fontSize: "medium",
   },
   companyName: {
     color: "grey",
     fontStyle: "italic",
+    fontSize: "13px",
   },
 }));
 export default function Post() {
@@ -61,7 +65,7 @@ export default function Post() {
   const url = "https://jsonplaceholder.typicode.com/posts";
   useEffect(() => {
     axios.get(url).then((res) => {
-      console.log(res);
+      console.log(res.data);
       setInfo(res.data);
     });
   });
